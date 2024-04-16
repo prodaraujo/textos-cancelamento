@@ -149,13 +149,13 @@
     var conta = document.getElementById("conta").value;
     var proporcionalCheckbox = document.getElementById("proporcionalCheckbox").checked;
 
-    var dia = String(dataCancelamento.getDate()).padStart(2, '0');
+    var dia = String(dataCancelamento.getDate() + 1).padStart(2, '0');
     var mes = String(dataCancelamento.getMonth() + 1).padStart(2, '0');
     var ano = dataCancelamento.getFullYear();
     var dataCancelamentoFormatada = dia + '/' + mes + '/' + ano;
 
     var texto = "Olá, tudo bem?\n\n";
-    texto += "O seu seguro com certificado " + certificado + ", do produto " + produto + " foi cancelado.\n\n";
+    texto += "O seu seguro com certificado " + certificado + ", do produto " + produto + " foi cancelado. ";
     texto += "A efetivação do cancelamento se deu em " + dataCancelamentoFormatada + ", sendo devido o pagamento da restituição";
     if (proporcionalCheckbox) {
       texto += " proporcional";
