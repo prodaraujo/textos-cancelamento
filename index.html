@@ -129,6 +129,19 @@
     document.execCommand("copy");
     alert("Texto copiado para a área de transferência!");
   }
+
+  // Função para preencher automaticamente a data de cancelamento com a data atual
+  function preencherDataAtual() {
+    var dataAtual = new Date();
+    var dia = String(dataAtual.getDate()).padStart(2, '0');
+    var mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    var ano = dataAtual.getFullYear();
+    var dataFormatada = ano + '-' + mes + '-' + dia;
+    document.getElementById("dataCancelamento").value = dataFormatada;
+  }
+
+  // Chamando a função ao carregar a página para preencher automaticamente a data de cancelamento
+  window.onload = preencherDataAtual;
 </script>
 
 </body>
