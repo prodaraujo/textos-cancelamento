@@ -19,13 +19,13 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 400px;
+    padding: 20px;
+    width: 300px; /* Reduzindo a largura do contêiner */
     max-width: 90%;
   }
   h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 20px; /* Reduzindo o tamanho do título */
+    margin-bottom: 15px;
     text-align: center;
     color: #333;
   }
@@ -33,44 +33,59 @@
     display: block;
     margin-bottom: 5px;
     color: #666;
-    font-size: 16px;
+    font-size: 14px; /* Reduzindo o tamanho do texto das etiquetas */
   }
   input, textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 8px; /* Reduzindo o preenchimento dos campos de entrada */
+    margin-bottom: 10px; /* Reduzindo a margem inferior dos campos de entrada */
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px; /* Reduzindo o tamanho da fonte dos campos de entrada */
   }
   button {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px; /* Reduzindo o tamanho do texto do botão */
     transition: background-color 0.3s ease;
   }
   button:hover {
     background-color: #0056b3;
   }
+
+  .checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+  .checkbox-input {
+    margin-right: 8px; /* Espaçamento entre a checkbox e o texto do label */
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
   #textoResultado {
     width: 100%;
-    padding: 10px;
-    margin-top: 15px;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px; /* Reduzindo a margem inferior do texto de resultado */
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
     resize: none;
-    height: 150px;
-    font-size: 16px;
+    height: 100px; /* Reduzindo a altura da área de texto de resultado */
+    font-size: 14px; /* Reduzindo o tamanho da fonte do texto de resultado */
   }
   .btn-copy {
-    margin-top: 10px;
+    margin-top: 5px; /* Reduzindo a margem superior do botão de cópia */
+    margin-bottom: 0; /* Removendo a margem inferior do botão de cópia */
   }
 </style>
 </head>
@@ -91,6 +106,12 @@
   <label for="valorDevido">Valor Devido:</label>
   <input type="text" id="valorDevido" placeholder="Digite o valor devido">
 
+  <label class="checkbox-label for="proporcionalCheckbox">
+    <input type="checkbox" id="proporcionalCheckbox" class="checkbox-input">
+    Proporcional
+  </label>
+  
+
   <label for="agencia">Agência:</label>
   <input type="text" id="agencia" placeholder="Digite o número da agência">
 
@@ -105,6 +126,18 @@
 </div>
 
 <script>
+  function preencherDataCancelamento() {
+    var dataCancelamentoInput = document.getElementById("dataCancelamento");
+    var dataAtual = new Date();
+    var dia = String(dataAtual.getDate()).padStart(2, '0');
+    var mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    var ano = dataAtual.getFullYear();
+    var dataAtualFormatada = ano + '-' + mes + '-' + dia;
+    dataCancelamentoInput.value = dataAtualFormatada;
+  }
+
+  preencherDataCancelamento();
+
   function gerarTexto() {
     var certificado = document.getElementById("certificado").value;
     var produto = document.getElementById("produto").value;
@@ -113,15 +146,20 @@
     var valorDevido = document.getElementById("valorDevido").value;
     var agencia = document.getElementById("agencia").value;
     var conta = document.getElementById("conta").value;
+    var proporcionalCheckbox = document.getElementById("proporcionalCheckbox").checked;
 
-    var dia = String(dataCancelamento.getDate() + 1).padStart(2, '0');
+    var dia = String(dataCancelamento.getDate()).padStart(2, '0');
     var mes = String(dataCancelamento.getMonth() + 1).padStart(2, '0');
     var ano = dataCancelamento.getFullYear();
     var dataCancelamentoFormatada = dia + '/' + mes + '/' + ano;
 
     var texto = "Olá, tudo bem?\n\n";
     texto += "O seu seguro com certificado " + certificado + ", do produto " + produto + " foi cancelado.\n\n";
-    texto += "A efetivação do cancelamento se deu em " + dataCancelamentoFormatada + ", sendo devido o pagamento da restituição no valor de R$ " + valorDevido + ". ";
+    texto += "A efetivação do cancelamento se deu em " + dataCancelamentoFormatada + ", sendo devido o pagamento da restituição";
+    if (proporcionalCheckbox) {
+      texto += " proporcional";
+    }
+    texto += " no valor de R$ " + valorDevido + ". ";
     texto += "O crédito da restituição está previsto para ocorrer em até 3 dias úteis, no Banco 104, agência " + agencia + ", conta " + conta + ".\n\n";
     texto += "Caso tenha ficado com alguma dúvida, entre em contato com a nossa Central de Serviços e Relacionamento. Teremos o maior prazer em atendê-lo(a)!";
 
@@ -138,10 +176,15 @@
     // Limpar os campos de entrada após copiar o texto
     document.getElementById("certificado").value = "";
     document.getElementById("produto").value = "";
-    document.getElementById("dataCancelamento").value = "";
     document.getElementById("valorDevido").value = "";
     document.getElementById("agencia").value = "";
     document.getElementById("conta").value = "";
+
+    // Desmarcar a checkbox
+    document.getElementById("proporcionalCheckbox").checked = false;
+
+    // Preencher a data de cancelamento com a data atual
+    preencherDataCancelamento();
   }
 </script>
 
