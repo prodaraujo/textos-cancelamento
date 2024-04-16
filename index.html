@@ -108,14 +108,20 @@
   function gerarTexto() {
     var certificado = document.getElementById("certificado").value;
     var produto = document.getElementById("produto").value;
-    var dataCancelamento = document.getElementById("dataCancelamento").value;
+    var dataCancelamentoInput = document.getElementById("dataCancelamento").value;
+    var dataCancelamento = new Date(dataCancelamentoInput);
     var valorDevido = document.getElementById("valorDevido").value;
     var agencia = document.getElementById("agencia").value;
     var conta = document.getElementById("conta").value;
 
+    var dia = String(dataCancelamento.getDate() + 1).padStart(2, '0');
+    var mes = String(dataCancelamento.getMonth() + 1).padStart(2, '0');
+    var ano = dataCancelamento.getFullYear();
+    var dataCancelamentoFormatada = dia + '/' + mes + '/' + ano;
+
     var texto = "Olá, tudo bem?\n\n";
     texto += "O seu seguro com certificado " + certificado + ", do produto " + produto + " foi cancelado.\n\n";
-    texto += "A efetivação do cancelamento se deu em " + dataCancelamento + ", sendo devido o pagamento da restituição no valor de R$ " + valorDevido + ". ";
+    texto += "A efetivação do cancelamento se deu em " + dataCancelamentoFormatada + ", sendo devido o pagamento da restituição no valor de R$ " + valorDevido + ". ";
     texto += "O crédito da restituição está previsto para ocorrer em até 3 dias úteis, no Banco 104, agência " + agencia + ", conta " + conta + ".\n\n";
     texto += "Caso tenha ficado com alguma dúvida, entre em contato com a nossa Central de Serviços e Relacionamento. Teremos o maior prazer em atendê-lo(a)!";
 
@@ -137,16 +143,6 @@
     document.getElementById("agencia").value = "";
     document.getElementById("conta").value = "";
   }
-
-  function preencherDataAtual() {
-    var dataAtual = new Date();
-    var dia = String(dataAtual.getDate()).padStart(2, '0');
-    var mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
-    var ano = dataAtual.getFullYear();
-    var dataFormatada = ano + '-' + mes + '-' + dia;
-    document.getElementById("dataCancelamento").value = dataFormatada;
-  }
-
 </script>
 
 </body>
