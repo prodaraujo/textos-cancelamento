@@ -1,7 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Texto Personalizado</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  select, input {
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  #result {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+</style>
 </head>
 <body>
+
+<h1>Gerador de Texto Personalizado</h1>
+
+<label for="texto">Selecione o texto padrão:</label>
+<select id="texto">
+  <option value="Olá, [nome]! Como vai?">Opção 1</option>
+  <option value="[nome], obrigado por visitar nosso site!">Opção 2</option>
+</select>
+
+<label for="nome">Nome:</label>
+<input type="text" id="nome" placeholder="Digite o nome">
+
+<label for="outroDado">Outro Dado:</label>
+<input type="text" id="outroDado" placeholder="Digite outro dado">
+
+<button onclick="gerarTexto()">Gerar Texto</button>
+
+<div id="result"></div>
+
+<script>
+  function gerarTexto() {
+    var textoPadrao = document.getElementById("texto").value;
+    var nome = document.getElementById("nome").value;
+    var outroDado = document.getElementById("outroDado").value;
+
+    // Substitui o marcador [nome] pelo nome inserido
+    textoPadrao = textoPadrao.replace("[nome]", nome);
+
+    // Substitui outro marcador pelo outro dado inserido
+    textoPadrao = textoPadrao.replace("[outroDado]", outroDado);
+
+    // Exibe o texto gerado
+    document.getElementById("result").textContent = textoPadrao;
+  }
+</script>
+
 </body>
 </html>
